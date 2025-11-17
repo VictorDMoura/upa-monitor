@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { COLORS, getTempoColor } from '../utils/constants';
 
-const FilaCard = ({ especialidade, quantidade, tempoMedio }) => {
+const FilaCard = ({ especialidade, tempoConsulta = 15 }) => {
   return (
     <View style={styles.card}>
       <View style={styles.header}>
@@ -12,19 +12,14 @@ const FilaCard = ({ especialidade, quantidade, tempoMedio }) => {
       
       <View style={styles.info}>
         <View style={styles.infoItem}>
-          <Text style={styles.label}>Pessoas na fila</Text>
-          <Text style={styles.value}>{quantidade}</Text>
-        </View>
-        
-        <View style={styles.infoItem}>
-          <Text style={styles.label}>Tempo médio</Text>
-          <Text style={[styles.value, { color: getTempoColor(tempoMedio) }]}>
-            {tempoMedio} min
+          <Text style={styles.label}>Tempo médio por consulta</Text>
+          <Text style={[styles.value, { color: getTempoColor(tempoConsulta) }]}>
+            {tempoConsulta} min
           </Text>
         </View>
       </View>
       
-      <View style={[styles.statusBar, { backgroundColor: getTempoColor(tempoMedio) }]} />
+      <View style={[styles.statusBar, { backgroundColor: getTempoColor(tempoConsulta) }]} />
     </View>
   );
 };
@@ -57,7 +52,7 @@ const styles = StyleSheet.create({
   },
   info: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   },
   infoItem: {
     flex: 1,

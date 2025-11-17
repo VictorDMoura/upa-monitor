@@ -12,16 +12,22 @@ export default function UPACard({ upa, onPress }) {
       <Text style={styles.cardAddress}>{upa.endereco}</Text>
       <View style={styles.stats}>
         <View style={styles.stat}>
-          <Text style={styles.statIcon}>👥</Text>
-          <Text style={styles.statText}>{upa.pessoas} na fila</Text>
-        </View>
-        <View style={styles.stat}>
           <Text style={styles.statIcon}>⏱️</Text>
-          <Text style={[styles.statText, { color: getTempoColor(upa.tempo) }]}>
-            ~{upa.tempo} min
-          </Text>
+          <View>
+            <Text style={styles.statLabel}>Tempo médio por consulta</Text>
+            <Text style={[styles.statText, { color: getTempoColor(upa.tempoMedioConsulta || 0) }]}>
+              ~{upa.tempoMedioConsulta || 0} min
+            </Text>
+          </View>
         </View>
       </View>
+      {upa.totalEspecialidades > 0 && (
+        <View style={styles.especialidadesInfo}>
+          <Text style={styles.especialidadesText}>
+            🩺 {upa.totalEspecialidades} {upa.totalEspecialidades === 1 ? 'especialidade' : 'especialidades'}
+          </Text>
+        </View>
+      )}
     </TouchableOpacity>
   );
 }
@@ -60,7 +66,7 @@ const styles = StyleSheet.create({
   },
   stats: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   },
   stat: {
     flexDirection: 'row',
@@ -71,7 +77,23 @@ const styles = StyleSheet.create({
     marginRight: 4,
   },
   statText: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  statLabel: {
+    fontSize: 12,
+    color: '#6b7280',
+    marginBottom: 2,
+  },
+  especialidadesInfo: {
+    marginTop: 8,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#e5e7eb',
+  },
+  especialidadesText: {
+    fontSize: 12,
+    color: '#6b7280',
+    fontWeight: '500',
   },
 });

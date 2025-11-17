@@ -31,8 +31,3 @@ export const getTempoColor = (tempo) => {
   if (tempo < TEMPO_STATUS.MODERADO) return COLORS.warning;
   return COLORS.danger;
 };
-
-// Dados mockados (mova do App.js para cá)
-export const MOCK_UPAS = [
-  // ... seus dados mockados
-];

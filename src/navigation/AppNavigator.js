@@ -6,6 +6,7 @@ import { Text } from 'react-native';
 
 import HomeScreen from '../screens/HomeScreen';
 import MapaScreen from '../screens/MapaScreen';
+import UPADetailScreen from '../screens/UPADetailScreen';
 import { COLORS } from '../utils/constants';
 
 const Stack = createStackNavigator();
@@ -23,6 +24,11 @@ const HomeStack = () => (
       name="Home"
       component={HomeScreen}
       options={{ title: 'Monitor de Filas UPA' }}
+    />
+    <Stack.Screen
+      name="UPADetail"
+      component={UPADetailScreen}
+      options={{ title: 'Detalhes da UPA' }}
     />
   </Stack.Navigator>
 );

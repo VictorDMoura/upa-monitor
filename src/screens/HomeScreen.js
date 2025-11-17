@@ -9,10 +9,10 @@ import {
   Alert,
 } from 'react-native';
 import UPACard from '../components/UPACard';
-import { unidadesAPI, filasAPI } from '../api/endpoints';
+import { unidadesAPI, filasAPI, servicosAPI } from '../api/endpoints';
 import { COLORS } from '../utils/constants';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [upas, setUpas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -24,20 +24,20 @@ const HomeScreen = () => {
       const upasComDados = await Promise.all(
         unidades.map(async (unidade) => {
           try {
-            const filas = await filasAPI.getByUnidade(unidade.id);
+            const especialidades = await servicosAPI.getByUnidade(unidade.id);
             const stats = await filasAPI.getEstatisticas(unidade.id);
             
             return {
               ...unidade,
-              totalPessoas: filas.length || 0,
-              tempoMedioEspera: stats.tempoMedio || 0,
+              tempoMedioConsulta: stats.tempoMedio || 15,
+              totalEspecialidades: especialidades.length || 0,
             };
           } catch (error) {
             console.log('Erro ao buscar dados da UPA:', unidade.nome);
             return {
               ...unidade,
-              totalPessoas: 0,
-              tempoMedioEspera: 0,
+              tempoMedioConsulta: 15,
+              totalEspecialidades: 0,
             };
           }
         })
@@ -91,7 +91,7 @@ const HomeScreen = () => {
         renderItem={({ item }) => (
           <UPACard
             upa={item}
-            onPress={() => console.log('Clicou em:', item.nome)}
+            onPress={(upa) => navigation.navigate('UPADetail', { upa })}
           />
         )}
         refreshControl={
