@@ -167,6 +167,16 @@ export const filasAPI = {
         a.status === 'finalizado' && (a.dataFim || a.dt_fim)
       );
       
+      // Contar quantidade na fila (status "aguardando")
+      let pessoasNaFila = todosAtendimentos.filter(a => 
+        a.status === 1 || a.status === 'emitido' || 
+        a.status === 2 || a.status === 'aguardando'
+      );
+      if (servicoId) {
+        pessoasNaFila = pessoasNaFila.filter(a => a.servico?.id === servicoId);
+      }
+
+
       // Se servicoId foi especificado, filtrar por serviço (a API não filtra corretamente)
       if (servicoId) {
         atendimentosFinalizados = atendimentosFinalizados.filter(a => 
@@ -178,6 +188,7 @@ export const filasAPI = {
         return {
           tempoMedio: 15, // Valor padrão se não houver dados
           totalAtendimentos: 0,
+          qtdPessoas: pessoasNaFila.length
         };
       }
       
@@ -206,12 +217,14 @@ export const filasAPI = {
       return {
         tempoMedio,
         totalAtendimentos: atendimentosFinalizados.length,
+        qtdPessoas: pessoasNaFila.length
       };
     } catch (error) {
       console.error('Erro ao calcular estatísticas:', error);
       return {
         tempoMedio: 15, // Valor padrão em caso de erro
         totalAtendimentos: 0,
+        qtdPessoas: 0
       };
     }
   },

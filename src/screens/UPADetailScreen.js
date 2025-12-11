@@ -30,11 +30,13 @@ const UPADetailScreen = ({ route }) => {
             return {
               nome: servico.nome,
               tempoConsulta: stats.tempoMedio || 15,
+              qtdPessoas: stats.qtdPessoas || 0
             };
           } catch (error) {
             return {
               nome: servico.nome,
               tempoConsulta: 15,
+              qtdPessoas: 0
             };
           }
         })
@@ -115,6 +117,7 @@ const UPADetailScreen = ({ route }) => {
               key={esp.id}
               especialidade={esp.nome}
               tempoConsulta={esp.tempoConsulta}
+              qtdPessoas={esp.qtdPessoas}
             />
           ))
         )}

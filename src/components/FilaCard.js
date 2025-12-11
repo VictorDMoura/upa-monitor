@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { COLORS, getTempoColor } from '../utils/constants';
 
-const FilaCard = ({ especialidade, tempoConsulta = 15 }) => {
+const FilaCard = ({ especialidade, tempoConsulta = 15, qtdPessoas = 0 }) => {
   return (
     <View style={styles.card}>
       <View style={styles.header}>
@@ -15,6 +15,12 @@ const FilaCard = ({ especialidade, tempoConsulta = 15 }) => {
           <Text style={styles.label}>Tempo médio por consulta</Text>
           <Text style={[styles.value, { color: getTempoColor(tempoConsulta) }]}>
             {tempoConsulta} min
+          </Text>
+        </View>
+        <View style={styles.infoItem}>
+          <Text style={styles.label}>Pessoas na fila</Text>
+          <Text style={styles.value}>
+            {qtdPessoas}
           </Text>
         </View>
       </View>
